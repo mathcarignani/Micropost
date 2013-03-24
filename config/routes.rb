@@ -1,6 +1,6 @@
 Micropost::Application.routes.draw do
-  
-  get "users/new"
+ 
+  resources :users #Indica que vamos a utilizar REST con usuarios
 
   #Comentamos esto para crear los "alias"
   #get "static_pages/home"
