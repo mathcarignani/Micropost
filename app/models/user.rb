@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   	# user.authenticate("Contrasena")
 
   before_save { |user| user.email = email.downcase } #Antes de guardar pase el mail a minusculas
+  before_save :create_remember_token # Antes de salvar vamos a crear el token
 
   validates :name, presence: true, length: { maximum: 50 } #Valida que el name venga si o si, y que sea menor = a 50
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i #Constante, expresion regular para validar mail (Letras mayusculas!)
@@ -30,4 +31,10 @@ class User < ActiveRecord::Base
   # @user.valid? para ver si un usuario es valido
   # @user.errors.full_messages para ver los mensajes de error de validacion
   # @user.authenticate("Contrasena") para ver si la contrasena es correcta
+
+  private # Metodos privados
+
+    def create_remember_token
+      self.remember_token = SecureRandom.urlsafe_base64 # Crear un valor aleatorio seguro
+    end
 end

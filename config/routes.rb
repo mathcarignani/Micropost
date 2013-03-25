@@ -1,6 +1,7 @@
 Micropost::Application.routes.draw do
  
   resources :users #Indica que vamos a utilizar REST con usuarios
+  resources :sessions, only: [:new, :create, :destroy] # Rest pero unicamente el new, create y destroy
 
   #Comentamos esto para crear los "alias"
   #get "static_pages/home"
@@ -17,6 +18,9 @@ Micropost::Application.routes.draw do
   match '/contact', to: 'static_pages#contact'
 
   match '/signup',  to: 'users#new'
+  
+  match '/signin',  to: 'sessions#new'
+  match '/signout', to: 'sessions#destroy', via: :delete
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
